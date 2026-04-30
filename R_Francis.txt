@@ -1,0 +1,92 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R_Francis
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX1017E6E9-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ description Francis_Military_Academy_LAN
+ ip address 10.15.4.1 255.255.254.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/3/0
+ description To_R_Reese
+ ip address 10.15.9.178 255.255.255.252
+!
+interface Serial0/3/1
+ description To_R_Home
+ ip address 10.15.9.181 255.255.255.252
+ clock rate 64000
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 10.15.9.128 255.255.255.224 10.15.9.182 
+ip route 10.15.0.0 255.255.252.0 10.15.9.177 
+ip route 10.15.6.0 255.255.254.0 10.15.9.177 
+ip route 10.15.8.0 255.255.255.0 10.15.9.177 
+ip route 10.15.9.0 255.255.255.128 10.15.9.177 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+
