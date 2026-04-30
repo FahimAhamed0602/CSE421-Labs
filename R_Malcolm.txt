@@ -1,0 +1,114 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R_Malcolm
+!
+!
+!
+!
+ip dhcp excluded-address 10.15.0.1 10.15.0.10
+!
+ip dhcp pool MalcolmLAN
+ network 10.15.0.0 255.255.252.0
+ default-router 10.15.0.1
+ dns-server 10.15.9.131
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX101731VW-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ description Malcolm_School_Lab_LAN
+ ip address 10.15.0.1 255.255.252.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ description Temp_Link_To_DNS_Server
+ ip address 10.15.9.129 255.255.255.224
+ duplex auto
+ speed auto
+!
+interface Serial0/1/0
+ description To_R_Hal
+ ip address 10.15.9.161 255.255.255.252
+ clock rate 64000
+!
+interface Serial0/1/1
+ description To_R_Reese
+ ip address 10.15.9.165 255.255.255.252
+ clock rate 64000
+!
+interface Serial0/3/0
+ description To_R_Home_Future
+ ip address 10.15.9.169 255.255.255.252
+ clock rate 64000
+!
+interface Serial0/3/1
+ description To_R_Dewey_Future
+ ip address 10.15.9.173 255.255.255.252
+ clock rate 64000
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router rip
+ version 2
+ redistribute static 
+ passive-interface FastEthernet0/0
+ passive-interface FastEthernet0/1
+ passive-interface Serial0/3/0
+ passive-interface Serial0/3/1
+ network 10.0.0.0
+ no auto-summary
+!
+ip classless
+ip route 10.15.6.0 255.255.254.0 10.15.9.174 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

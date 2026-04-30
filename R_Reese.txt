@@ -1,0 +1,100 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R_Reese
+!
+!
+!
+!
+ip dhcp excluded-address 10.15.8.1 10.15.8.10
+!
+ip dhcp pool ReeseLAN
+ network 10.15.8.0 255.255.255.0
+ default-router 10.15.8.1
+ dns-server 10.15.9.131
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX10179Z8F-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ description Reese_Kitchen_Zone_LAN
+ ip address 10.15.8.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/1/0
+ description To_R_Francis_Future
+ ip address 10.15.9.177 255.255.255.252
+ clock rate 64000
+!
+interface Serial0/1/1
+ description To_R_Malcolm
+ ip address 10.15.9.166 255.255.255.252
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router rip
+ version 2
+ redistribute static 
+ passive-interface FastEthernet0/0
+ network 10.0.0.0
+ no auto-summary
+!
+ip classless
+ip route 10.15.4.0 255.255.254.0 10.15.9.178 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+
